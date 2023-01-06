@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Eight Ball</title>
+</head>
+  
+<body>
+    <h1>You Said: </h1>
+    <div class="words" contenteditable>
+        <h2 id="p"></h2>
+    </div>
+    <h1>Magic Eight Ball Said: </h1>
+    <div class="coolClassHere" contenteditable>
+        <h2 id="p2"></h2>
+    </div>
+    <div class="coolClassHere" contenteditable>
+        <h4 id="p3"></h4>
+    </div>
+    <img src="https://magic-8ball.com/wp-content/themes/astra-child/assets/images/magicBallStart.png?ezimgfmt=ng%3Awebp%2Fngcb12%2Frs%3Adevice%2Frscb12-2"></img>
+    <script>
+        function answerHonestly() {
+          document.write("<script>location.reload();</\script>");
+        }
+        var responses = ['Yes', 'No', 'Maybe', 'Most Certainly'];
+        var respond = responses[Math.floor(Math.random()*responses.length)];
+      
+        var speech = true;
+        window.SpeechRecognition = window.SpeechRecognition
+                        || window.webkitSpeechRecognition;
+  
+        const recognition = new SpeechRecognition();
+        recognition.interimResults = true;
+        const words = document.querySelector('.words');
+        words.appendChild(p);
+  
+        recognition.addEventListener('result', e => {
+            const transcript = Array.from(e.results)
+                .map(result => result[0])
+                .map(result => result.transcript)
+                .join('')
+  
+            document.getElementById("p").innerHTML = transcript;
+            console.log(transcript);
+            document.getElementById("p2").innerHTML = respond;
+            document.getElementById("p3").innerHTML = "Refreshing in three seconds...";
+            setTimeout(answerHonestly, 3000);
+        });
+          
+        if (speech == true) {
+            recognition.start();
+            recognition.addEventListener('end', recognition.start);
+
+        }
+    </script>
+</body>
+  
+</html>
